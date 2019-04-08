@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ENGG1320 CCTV</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<h1 style="text-align:center;padding:30px;">Highway Accident Early Warning and Prevention System</h1>
+					<div class="table">
+
+						<div class="row header">
+							<div class="cell">
+								Name
+							</div>
+							<div class="cell">
+								IP
+							</div>
+							<div class="cell">
+								Location
+							</div>
+							<div class="cell">
+								Detected
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="cell" data-title="Name">
+								CCTV 1 (DUMMY)
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								1/F
+							</div>
+							<div class="cell" data-title="Detected" id="i2">
+								No
+							</div>
+						</div>
+												
+						<div class="row" id="r1" onClick="window.open( 'camera.py','_top' ); return false;">
+
+							<div class="cell" data-title="Name">
+								CCTV 2
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								1/F
+							</div>
+							<div class="cell" data-title="Detected" id="i1">
+								No
+							</div>
+
+						</div>
+						
+
+
+
+
+						<div class="row">
+							<div class="cell" data-title="Name">
+								CCTV 3 (DUMMY)
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								1/F
+							</div>
+							<div class="cell" data-title="Detected" id="i2">
+								No
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="cell" data-title="Name">
+								CCTV 1 (DUMMY)
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								2/F
+							</div>
+							<div class="cell" data-title="Detected" id="i2">
+								No
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="cell" data-title="Name">
+								CCTV 2 (DUMMY)
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								2/F
+							</div>
+							<div class="cell" data-title="Detected" id="i2">
+								No
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="cell" data-title="Name">
+								CCTV 3 (DUMMY)
+							</div>
+							<div class="cell" data-title="IP">
+								xxx.xxx.xxx.xxx
+							</div>
+							<div class="cell" data-title="Location">
+								2/F
+							</div>
+							<div class="cell" data-title="Detected" id="i2">
+								No
+							</div>
+						</div>
+
+						
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+   var audio = new Audio('audio/alarm.wav');
+   var source = new EventSource("update.py");
+   source.onmessage = function(event) {
+       console.log(event.data);
+       document.getElementById("i1").innerHTML=event.data;
+       if(event.data=="Yes")
+       {
+       	document.getElementById("r1").style.backgroundColor = '#FFF59D';
+       	document.getElementById("r1").classList.add("blink");
+       	audio.play();
+       }
+       else
+       {
+       	document.getElementById("r1").style.backgroundColor = '#FFFFFF';
+       	document.getElementById("r1").classList.remove("blink");
+       }
+   };
+</script>
+
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>
