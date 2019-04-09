@@ -21,152 +21,6 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
-<body>
-	
-	<div class="limiter">
-		<div class="container-table100">
-			<div class="wrap-table100">
-				<h1 style="text-align:center;padding:30px;">Highway Accident Early Warning and Prevention System</h1>
-					<div class="table">
-
-						<div class="row header">
-							<div class="cell">
-								Name
-							</div>
-							<div class="cell">
-								IP
-							</div>
-							<div class="cell">
-								Location
-							</div>
-							<div class="cell">
-								Detected
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="cell" data-title="Name">
-								CCTV 1 (DUMMY)
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								1/F
-							</div>
-							<div class="cell" data-title="Detected" id="i2">
-								No
-							</div>
-						</div>
-												
-						<div class="row" id="r1" onClick="window.open( 'camera.py','_top' ); return false;">
-
-							<div class="cell" data-title="Name">
-								CCTV 2
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								1/F
-							</div>
-							<div class="cell" data-title="Detected" id="i1">
-								No
-							</div>
-
-						</div>
-						
-
-
-
-
-						<div class="row">
-							<div class="cell" data-title="Name">
-								CCTV 3 (DUMMY)
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								1/F
-							</div>
-							<div class="cell" data-title="Detected" id="i2">
-								No
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="cell" data-title="Name">
-								CCTV 1 (DUMMY)
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								2/F
-							</div>
-							<div class="cell" data-title="Detected" id="i2">
-								No
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="cell" data-title="Name">
-								CCTV 2 (DUMMY)
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								2/F
-							</div>
-							<div class="cell" data-title="Detected" id="i2">
-								No
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="cell" data-title="Name">
-								CCTV 3 (DUMMY)
-							</div>
-							<div class="cell" data-title="IP">
-								xxx.xxx.xxx.xxx
-							</div>
-							<div class="cell" data-title="Location">
-								2/F
-							</div>
-							<div class="cell" data-title="Detected" id="i2">
-								No
-							</div>
-						</div>
-
-						
-					</div>
-			</div>
-		</div>
-	</div>
-
-
-<script type="text/javascript">
-   var audio = new Audio('audio/alarm.wav');
-   var source = new EventSource("update.py");
-   source.onmessage = function(event) {
-       console.log(event.data);
-       document.getElementById("i1").innerHTML=event.data;
-       if(event.data=="Yes")
-       {
-       	document.getElementById("r1").style.backgroundColor = '#FFF59D';
-       	document.getElementById("r1").classList.add("blink");
-       	audio.play();
-       }
-       else
-       {
-       	document.getElementById("r1").style.backgroundColor = '#FFFFFF';
-       	document.getElementById("r1").classList.remove("blink");
-       }
-   };
-</script>
-
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
@@ -176,6 +30,125 @@
 	<script src="vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		function setCookie(cname, cvalue, exdays) {
+  			var d = new Date();
+  			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  			var expires = "expires="+ d.toUTCString();
+  			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+		function getCookie(cname) {
+  			var name = cname + "=";
+  			var decodedCookie = decodeURIComponent(document.cookie);
+  			var ca = decodedCookie.split(';');
+  			for(var i = 0; i <ca.length; i++) {
+    			var c = ca[i];
+    			while (c.charAt(0) == ' ') {
+      				c = c.substring(1);
+    			}
+    			if (c.indexOf(name) == 0) {
+      				return c.substring(name.length, c.length);
+    			}
+  			}
+  			return "";
+		}
+		$("#add").click(function() {
+			var name=$("#name").val(),ip=$("#ip").val(),location=$("#location").val();
+			var c_name=getCookie("name");
+			var c_ip=getCookie("ip");
+			var c_location=getCookie("location");
+			if(c_name=='') {
+				c_name=name;
+				c_ip=ip;
+				c_location=location;
+			}
+			else {
+				c_name+="|"+name;
+				c_ip+="|"+ip;
+				c_location+="|"+location;
+			}
+			setCookie("name",c_name,3650);
+			setCookie("ip",c_ip,3650);
+			setCookie("location",c_location,3650);
+			var str='<div class="row">\
+						<div class="cell">'+name+'</div>\
+						<div class="cell">'+ip+'</div>\
+						<div class="cell">'+location+'</div>\
+						<div class="cell" id="delete">Delete CCTV</div>\
+					</div>';
+			$("#main").append(str);
+			$("#name").val('');
+			$("#ip").val('');
+			$("#location").val('');
+		});
+		$(document).on("click","#delete",function() {
+			var idx=$(this).parent().index();
+			var c_name=getCookie("name").split("|");
+			var c_ip=getCookie("ip").split("|");
+			var c_location=getCookie("location").split("|");
+			var c_name_new='',c_ip_new='',c_location_new='';
+			for(var i=0;i<c_name.length;i++) {
+				if(i!=idx) {
+					if(c_name_new=='') {
+						c_name_new=c_name[i];
+						c_ip_new=c_ip[i];
+						c_location_new=c_location[i];
+					}
+					else {
+						c_name_new+="|"+c_name[i];
+						c_ip_new+="|"+c_ip[i];
+						c_location_new+="|"+c_location[i];
+					}
+				}
+			}
+			setCookie("name",c_name_new,3650);
+			setCookie("ip",c_ip_new,3650);
+			setCookie("location",c_location_new,3650);
+			$(this).parent().remove();
+		});
+		var c_name=getCookie("name").split("|");
+		var c_ip=getCookie("ip").split("|");
+		var c_location=getCookie("location").split("|");
+		if(c_name.length>0 && c_ip!='') {
+			for(var i=0;i<c_name.length;i++) {
+				var str='<div class="row">\
+						<div class="cell">'+c_name[i]+'</div>\
+						<div class="cell">'+c_ip[i]+'</div>\
+						<div class="cell">'+c_location[i]+'</div>\
+						<div class="cell" id="delete">Delete CCTV</div>\
+					</div>';
+				$("#main").append(str);
+			}
+		}
+	});
+	
+</script>
+<body>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<h1 style="text-align:center;padding:30px;">Highway Accident Early Warning and Prevention System</h1>
+					<div class="table" id="main">
+					</div>
+					<div class="table">
+						<div class="row">
+							<div class="cell" data-title="Name">
+								<input type="text" id="name" placeholder="Name:">
+							</div>
+							<div class="cell" data-title="IP">
+								<input type="text" id="ip" placeholder="IP:">
+							</div>
+							<div class="cell" data-title="Location">
+								<input type="text" id="location" placeholder="Location:">
+							</div>
+							<div class="cell" id="add">
+								Add CCTV
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
