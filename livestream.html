@@ -1,0 +1,27 @@
+<html>
+<head><title>Livestream</title>    
+<meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body style='background-color: rgb(196, 211, 246);'>
+<h1 style='text-align:center;margin-bottom:10px;'>Highway Accident Early Warning and Detection System</h1>
+<div>
+<div style="display:flex;margin-top: 30px;justify-content: center;">
+<form action="index.html" method="get">
+	<button style="float: left;width : 200px;">Return to CCTV list</button>
+</form> 
+<form action="off.py" method="post">
+  <button type="submit" style="float: right;width : 200px;">Dismiss Alarm</button>
+</form> 
+</div>
+<script language="JavaScript">
+link='http:' + '//' + window.location.hostname + ':8081';
+document.write('<img style="width:30%;margin-left:auto;margin-right:auto;display: block;" src="' + link + '"' + ' alt="' + link + '"' + '>');
+</script>
+</div>
+<div id="controls">
+<button id="sendDrone" style="margin: auto;margin-top: 20px;text-align:center;display: flex">Send Drones</button>
+</div>
+
+</body>
+</html>
