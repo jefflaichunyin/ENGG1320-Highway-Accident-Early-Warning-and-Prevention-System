@@ -32,13 +32,16 @@
 	<script src="js/main.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		function setCookie(cname, cvalue, exdays) {
+		function setCookie(cname, cvalue, exdays) 
+		{
   			var d = new Date();
   			d.setTime(d.getTime() + (exdays*24*60*60*1000));
   			var expires = "expires="+ d.toUTCString();
   			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 		}
-		function getCookie(cname) {
+
+		function getCookie(cname) 
+		{
   			var name = cname + "=";
   			var decodedCookie = decodeURIComponent(document.cookie);
   			var ca = decodedCookie.split(';');
@@ -53,7 +56,9 @@
   			}
   			return "";
 		}
-		$("#add").click(function() {
+
+		$("#add").click(function() 
+		{
 			var name=$("#name").val(),ip=$("#ip").val(),location=$("#location").val();
 			var c_name=getCookie("name");
 			var c_ip=getCookie("ip");
@@ -71,10 +76,12 @@
 			setCookie("name",c_name,3650);
 			setCookie("ip",c_ip,3650);
 			setCookie("location",c_location,3650);
+			var livestream_url = "'http://" + ip + "/livestream.html'" + ",'_self'";
+			var onclick_param = ' onClick="window.open(' + livestream_url + ')"';
 			var str='<div class="row">\
-						<div class="cell">'+name+'</div>\
-						<div class="cell">'+ip+'</div>\
-						<div class="cell">'+location+'</div>\
+						<div class="cell"' + onclick_param + '>'+name+'</div>\
+						<div class="cell"' + onclick_param + '>'+ip+'</div>\
+						<div class="cell"' + onclick_param + '>'+location+'</div>\
 						<div class="cell" id="delete">Delete CCTV</div>\
 					</div>';
 			$("#main").append(str);
@@ -82,7 +89,9 @@
 			$("#ip").val('');
 			$("#location").val('');
 		});
-		$(document).on("click","#delete",function() {
+
+		$(document).on("click","#delete",function(event) 
+		{
 			var idx=$(this).parent().index();
 			var c_name=getCookie("name").split("|");
 			var c_ip=getCookie("ip").split("|");
@@ -110,12 +119,16 @@
 		var c_name=getCookie("name").split("|");
 		var c_ip=getCookie("ip").split("|");
 		var c_location=getCookie("location").split("|");
-		if(c_name.length>0 && c_ip!='') {
+		
+		if(c_name.length>0 && c_ip!='') 
+		{
 			for(var i=0;i<c_name.length;i++) {
+				var livestream_url = "'http://" + c_ip[i] + "/livestream.html'" + ",'_self'";
+				var onclick_param = ' onClick="window.open(' + livestream_url + ')"';
 				var str='<div class="row">\
-						<div class="cell">'+c_name[i]+'</div>\
-						<div class="cell">'+c_ip[i]+'</div>\
-						<div class="cell">'+c_location[i]+'</div>\
+						<div class="cell"'+ onclick_param  +'>'+c_name[i]+'</div>\
+						<div class="cell"'+ onclick_param  +'>'+c_ip[i]+'</div>\
+						<div class="cell"'+ onclick_param  +'>'+c_location[i]+'</div>\
 						<div class="cell" id="delete">Delete CCTV</div>\
 					</div>';
 				$("#main").append(str);
