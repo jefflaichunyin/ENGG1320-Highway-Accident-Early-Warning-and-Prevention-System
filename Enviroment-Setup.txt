@@ -1,1 +1,47 @@
 sudo apt install lxde motion apache2 php libapache2-mod-php php-mysql git python3
+sudo modprobe bcm2835-v4l2
+change /etc/motion/motion.conf accordingly
+11c11
+< daemon on
+---
+> daemon off
+28c28
+< log_level 1
+---
+> log_level 6
+93c93
+< power_line_frequency 1
+---
+> power_line_frequency -1
+107c107
+< framerate 15
+---
+> framerate 2
+273c273
+< output_pictures off
+---
+> output_pictures on
+293c293
+< ffmpeg_output_movies off
+---
+> ffmpeg_output_movies on
+405c405
+< text_right ""
+---
+> text_right %Y-%m-%d\n%T-%q
+410c410
+< text_left ""
+---
+> ; text_left CAMERA %t
+494c494
+< stream_quality 90
+---
+> stream_quality 50
+501c501
+< stream_maxrate 15
+---
+> stream_maxrate 1
+504c504
+< stream_localhost off
+---
+> stream_localhost on
