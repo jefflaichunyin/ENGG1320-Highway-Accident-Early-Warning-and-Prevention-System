@@ -1,10 +1,10 @@
 #! /usr/bin/python3
 # coding=utf-8
-
+import time
 import cv2
 import numpy as np
 import queue
-
+TIMEOUT = 3
 camera = cv2.VideoCapture("http://127.0.0.1:8081")
 width = int(camera.get(3))
 height = int(camera.get(4))
@@ -30,7 +30,7 @@ q_x = queue.Queue(maxsize=2)
 previous = ""
 trigger = 0
 counter = 0
-x_old = None
+last_enter_time = -1
 while True:
     (grabbed, frame) = camera.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
@@ -75,8 +75,10 @@ while True:
                     print("L->R", x_avg)
                     if 0 <= x_avg <= 150:
                         print("ENTER")
+                        last_enter_time = time.time()
                     if 400 <= x_avg <= 480:
                         print("EXIT")
+                        last_enter_time = -1
                     trigger = 0
                 previous = "left"
                 if previous == "left":
@@ -94,10 +96,12 @@ while True:
             q_x.get()
         q_x.put(x_avg)
         #cv2.putText(frame, str(x_avg), (300, 100), 0, 0.5, (0, 0, 255), 2)
-        #frame = cv2.circle(frame, (int(x_avg), int(y_avg)),
-        #                   5, color[i].tolist(), -1)
-
-    cv2.imshow("Detection", frame)
+        frameDelta = cv2.circle(frameDelta, (int(x_avg), int(y_avg)),
+                           5, color[i].tolist(), -1)
+    if last_enter_time != -1 and (time.time() - last_enter_time) > TIMEOUT:
+      print("Broken down vehicle detected!")
+      last_enter_time = -1
+    cv2.imshow("Detection", frameDelta)
     cv2.waitKey(5)
     firstFrame = gray.copy()
 
