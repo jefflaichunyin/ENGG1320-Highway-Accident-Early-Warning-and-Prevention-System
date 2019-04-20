@@ -88,6 +88,12 @@ while True:
             elif diffx_sum > 20:
                 if trigger <= 0:
                     print("R->L")
+                    if 330 <= x_avg <= 480:
+                        print("ENTER")
+                        last_enter_time = time.time()
+                    if 0 <= x_avg <= 80:
+                        print("EXIT")
+                        last_enter_time = -1
                     trigger = 0
                 previous = "right"
                 if previous == "right":
