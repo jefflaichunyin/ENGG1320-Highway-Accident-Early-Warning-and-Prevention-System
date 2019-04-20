@@ -45,3 +45,22 @@ change /etc/motion/motion.conf accordingly
 < stream_localhost off
 ---
 > stream_localhost on
+
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+	Options ExecCGI
+	AddHandler cgi-script .py
+</Directory>
+
+<Directory /var/www/html>
+        Options Indexes FollowSymLinks
+	Require all granted
+	Options Indexes FollowSymLinks
+	Options ExecCGI
+	DirectoryIndex index.html
+</Directory>
+
+
+sudo a2enmod cgi
