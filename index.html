@@ -10,7 +10,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 	<!--===============================================================================================-->
@@ -61,7 +61,7 @@
 			var c_name = getCookie("name");
 			var c_ip = getCookie("ip");
 			var c_location = getCookie("location");
-			if (c_name == '') {
+			if (c_ip == '') {
 				c_name = name;
 				c_ip = ip;
 				c_location = location;
@@ -71,13 +71,15 @@
 				c_ip += "|" + ip;
 				c_location += "|" + location;
 			}
+			console.log("SETTING " + c_ip);
 			setCookie("name", c_name, 3650);
 			setCookie("ip", c_ip, 3650);
 			setCookie("location", c_location, 3650);
+			
 			var update_url = "http://" + ip + "/update.py";
 			var SCRIPT = '<script type="text/javascript">' +
 				'var audio = new Audio("audio/alarm.wav");' +
-				'var source = new EventSource("update.py");' +
+				'var source = new EventSource("'+update_url+'");' +
 				'source.onmessage = function(event) {' +
 				'	console.log(event.data);' +
 				'	if(event.data.trim()=="Yes"){' +
@@ -129,15 +131,16 @@
 		});
 		var c_name = getCookie("name").split("|");
 		var c_ip = getCookie("ip").split("|");
-		window.c_ip = getCookie("ip").split("|");
 		var c_location = getCookie("location").split("|");
-
+		console.log(c_ip.length);
+		console.log(c_name.length);
 		if (c_name.length > 0 && c_ip != '') {
-			for (var i = 0; i < c_name.length; i++) {
+			for (var i = 0; i < c_ip.length; i++) {
+				console.log(c_ip[i]);
 				var update_url = "http://" + c_ip[i] + "/update.py";
 				var SCRIPT = '<script type="text/javascript">' +
 					'var audio = new Audio("audio/alarm.wav");' +
-					'var source = new EventSource("update.py");' +
+					'var source = new EventSource("'+update_url+'");' +
 					'source.onmessage = function(event) {' +
 					'	console.log(event.data);' +
 					'	if(event.data.trim()=="Yes"){' +
@@ -153,11 +156,10 @@
 						<div class="cell"'+ onclick_param + '>' + c_name[i] + '</div>\
 						<div class="cell"'+ onclick_param + '>' + c_ip[i] + '</div>\
 						<div class="cell"'+ onclick_param + '>' + c_location[i] + '</div>\
-						<div class="cell" id="delete">Delete CCTV</div>' + SCRIPT + '\
+						<div class="cell" id="delete">Delete CCTV</div>' + SCRIPT +'\
 					</div>';
 
 				$("#main").append(str);
-				$("#main").append(SCRIPT);
 
 			}
 		}
