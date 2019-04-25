@@ -78,7 +78,7 @@ while True:
                     if 0 <= x_avg <= 180:
                         print("ENTER")
                         last_enter_time = time.time()
-                    if 350 <= x_avg <= 400:
+                    if 380 <= x_avg <= 432:
                         print("EXIT")
                         last_enter_time = -1
                     trigger = 0
@@ -88,7 +88,7 @@ while True:
             elif diffx_sum > 20:
                 if trigger <= 0:
                     print("R->L", x_avg)
-                    if 220 <= x_avg <= 400:
+                    if 250 <= x_avg <= 432:
                         print("ENTER")
                         last_enter_time = time.time()
                     if 0 <= x_avg <= 50:
