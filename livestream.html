@@ -1,4 +1,9 @@
 <html>
+<head>
+  <title>Live stream</title>
+  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <style>
 .dismiss {
   -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
@@ -83,27 +88,43 @@
 }
 
 </style>
-<head>
-  <title>Live stream</title>
-  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
+<script src="js/jquery-3.3.1.min.js"></script>
 
 <body style='background-color: #ffff99;'>
   <h1 style='text-align:center;margin-top:50px;margin-bottom:10px;font-family:sans-serif;'>Highway Accident Early Warning and Detection System</h1>
   <h2 style='text-align:center;margin-bottom:10px;font-family:sans-serif;'>Live Stream</h2>
   <div>
     <div style="display:flex;margin-top: 30px;justify-content: center;">
-      <form action="dismiss.py" method="get">
+      <form onsubmit="return dismiss();" method="post">
         <button class="dismiss" style="float: left;width : 200px;">Dismiss Alarm</button>
       </form>
-      <form action="sendDrones.py" method="post">
+      <form onsubmit="return send();" method="post">
         <button class="send" type="submit" style="float: right;width : 200px;">Send Drones</button>
       </form>
     </div>
     <script language="JavaScript">
       link = 'http:' + '//' + window.location.hostname + ':8081';
       document.write('<img style="height:50%;margin-left:auto;margin-right:auto;display: block;" src="' + link + '"' + ' alt="' + link + '"' + '>');
+      function send() {
+      console.log("SEND");
+      url = 'http:' + '//' + window.location.hostname + '/sendDrones.py';
+      $.get( url , {})   
+      .done(function( data ) {
+        
+      });
+      return false;
+      }
+      
+      function dismiss() {
+      console.log("DISMISS");
+      url = 'http:' + '//' + window.location.hostname + '/dismiss.py';
+      $.get( url , {})
+      .done(function( data ) {
+        window.history.back();
+      });
+      return false;
+      }
+
     </script>
   </div>
 </body>

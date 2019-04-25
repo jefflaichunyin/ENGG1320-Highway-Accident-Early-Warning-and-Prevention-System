@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import cgi
 import requests
-drone_IP = "192.168.0.112"
+drone_IP = "192.168.1.102"
 url = "http://" + drone_IP + "/on"
 
 try:
