@@ -1,6 +1,11 @@
 sudo apt install lxde motion apache2 php libapache2-mod-php php-mysql git python3
 sudo apt install v4l-utils
 sudo modprobe bcm2835-v4l2
+sudo a2enmod headers
+sudo a2enmod cgi
+add Header set Access-Control-Allow-Origin "*" to apache2.conf
+pip3 install requests
+
 change /etc/motion/motion.conf accordingly
 11c11
 < daemon on
@@ -56,6 +61,7 @@ change /etc/motion/motion.conf accordingly
 </Directory>
 
 <Directory /var/www/html>
+	Access-Control-Allow-Origin "*"
         Options Indexes FollowSymLinks
 	Require all granted
 	Options Indexes FollowSymLinks
@@ -63,5 +69,3 @@ change /etc/motion/motion.conf accordingly
 	DirectoryIndex index.html
 </Directory>
 
-
-sudo a2enmod cgi
